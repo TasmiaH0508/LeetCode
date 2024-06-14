@@ -1,5 +1,9 @@
 import java.util.LinkedList;
 
+/*
+Given a matrix of 1s and 0s, find the number of islands.
+An island consists of only 1s and an island is only allowed to "grow" in the N, S, E, W directions */
+
 class Coordinates {
     int row;
     int col;
