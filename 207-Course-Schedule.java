@@ -21,8 +21,8 @@ class Solution {
     3. If hashset empty, return false. Use a stack to contain all of the 
     values in the hashset by counting from 
     0 to numCourses - 1
-    4. If none of the parent(s) after updating the number of outgoing arrows, 
-    immediately return false. 
+    4. If none of the parent(s), after updating the number of outgoing arrows, 
+    have 0 outgoing arrows, immediately return false. 
     */
 
     Stack<Integer> s = new Stack<>();
