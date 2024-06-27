@@ -6,7 +6,14 @@ class Solution {
     Use a hashmap to map the value of the nodes to the number of times 
     and edge is connected to the node.
     Run through the hashmap and return the node for which the 
-    above-mentioned frequency is the greatest. */
+    above-mentioned frequency is the greatest. 
+    
+    alt method 1:
+    return the node with degree n  
+    
+    alt method 2:
+    an O(1) method;
+    take any two pairs, each denoting an edge in the undirected graph, and do an O(1) comparison*/
     public int findCenter(int[][] edges) {
         HashMap<Integer, Integer> freq = new HashMap<>();
         for (int i = 0; i < edges.length; i++) {
