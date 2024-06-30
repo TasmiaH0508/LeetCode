@@ -10,58 +10,40 @@
 
 class Solution {
     /**
+    Input is a bst, where all treenode values are unique
+
     Method:
-    1. Go down the tree and fill up a hashmap that maps from depth to the 
-    nodes at that depth. At the same time, create a parent hashmap
-    that maps from the child to parent. 
-    2. for the node at the greater depth, trace its parent until the parent 
-    is at the same depth as the higher node. 
-    3. find lowest common ancestor
+    If root.val is bigger than one of the treenode's values and smaller 
+    than the other treenode's values, we have found the lowest common ancestor.
+
+    If root.val is equal to one of the treenodes' values, we have found the
+    lowest common ancestor.
+
+    If root.val is smaller than both of the treenodes' values, recurse on the
+    right side, where the values are bigger. 
+
+    If root.val is larger than both treenodes' values, recurse on the left 
+    side, where the values are smaller. 
+
     */
-    Map<TreeNode, TreeNode> parentOf = new HashMap<>();
-    Map<TreeNode, Integer> depthOf = new HashMap<>();
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        parentOf.put(root, null);
-        fillHashMaps(root, 0);
-        return lowestCommonAncestor(p, q);
-    }
-
-    private TreeNode lowestCommonAncestor(TreeNode t, TreeNode p) {
-        if (depthOf.containsKey(t) && depthOf.containsKey(p)) {
-            int depthT = depthOf.get(t);
-            int depthP = depthOf.get(p);
-            if (depthT == depthP) {
-                if (t == p) {
-                    return t;
+        if (root != null && p != null && q != null) {
+            // it is stated that p != q
+            if (root.val == p.val || root.val == q.val) {
+                return root;
+            } else if (p.val > q.val) {
+                if (root.val > p.val) {
+                    return lowestCommonAncestor(root.left, p, q);
+                } else if (root.val > q.val) {
+                    return root;
                 } else {
-                    return lowestCommonAncestor(parentOf.get(t), parentOf.get(p));
+                    return lowestCommonAncestor(root.right, p, q);
                 }
-            } else if (depthT > depthP) {
-                return lowestCommonAncestor(parentOf.get(t), p);
             } else {
-                return lowestCommonAncestor(t, parentOf.get(p));
+                return lowestCommonAncestor(root, q, p);
             }
-        }
-        return null;
-    }
-
-    private void fillHashMaps(TreeNode t, int l) {
-        if (t.left == null && t.right == null) {
-            depthOf.put(t, l);
-        } else if (t.left == null) {            
-            depthOf.put(t, l);
-            parentOf.put(t.right, t);
-            fillHashMaps(t.right, l + 1);
-        } else if (t.right == null) {
-            depthOf.put(t, l);
-            parentOf.put(t.left, t);
-            fillHashMaps(t.left, l + 1);
         } else {
-            depthOf.put(t, l);
-            parentOf.put(t.left, t);
-            parentOf.put(t.right, t);
-            fillHashMaps(t.left, l + 1);
-            fillHashMaps(t.right, l + 1);
+            return null;
         }
     }
 }
