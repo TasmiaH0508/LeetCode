@@ -9,6 +9,32 @@
  * }
  */
 class Solution {
+    /**
+    Method:
+    1. Initialise the priority queue of integer arrays of size 2. The integer arrays 
+    are as such: [val, index of list in lists array]. The priority queue should 
+    poll integer arrays such that \val\ is the smallest across all arrays in the 
+    priority queue. 
+    2. Poll an integer array(curr) from the priority queue. For curr:
+    - Immediately add curr[0] to the listnode result. 
+    - Check lists[curr[1]] to see if the list is null. If not null, 
+    add to the priority queue in the manner stated above. 
+
+    Naiive solution:
+    1.Run through all k lists to find the smallest value. 
+    2.Add the smallest value found to the front of the list. 
+    3.Recurse until all the lists are empty. 
+    Total runtime = O(nk), where n is the total number of elements across k lists. 
+
+    Why is it important to track \index of list in lists array\?
+    - We must make sure that what is being added to the listnode result is the smallest
+    across all k lists(see naiive solution)
+    - By removing an element from a particular list and adding back another element from 
+    the same list, we are able to ensure that anytime an array,arr, is polled from 
+    the priority queue, val = arr[0] is the smallest across all lists. 
+    - In fact, the priority queue is implemented to help speed up step 1 of the naiive 
+    solution. 
+    */
     public ListNode mergeKLists(ListNode[] lists) {
         Comparator<Integer[]> c = new Comparator<>(){
             @Override
