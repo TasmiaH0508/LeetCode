@@ -13,7 +13,7 @@ class Solution {
     Method:
     1. Initialise the priority queue of integer arrays of size 2. The integer arrays 
     are as such: [val, index of list in lists array]. The priority queue should 
-    poll integer arrays such that \val\ is the smallest across all arrays in the 
+    poll integer arrays such that "val" is the smallest across all arrays in the 
     priority queue. 
     2. Poll an integer array(curr) from the priority queue. For curr:
     - Immediately add curr[0] to the listnode result. 
@@ -26,7 +26,7 @@ class Solution {
     3.Recurse until all the lists are empty. 
     Total runtime = O(nk), where n is the total number of elements across k lists. 
 
-    Why is it important to track \index of list in lists array\?
+    Why is it important to track "index of list in lists array"?
     - We must make sure that what is being added to the listnode result is the smallest
     across all k lists(see naiive solution)
     - By removing an element from a particular list and adding back another element from 
@@ -59,32 +59,7 @@ class Solution {
             if (lists[index] != null) {
                 pq.add(new Integer[]{lists[index].val, index});
                 lists[index] = lists[index].next;
-            } else {
-                int j = index + 1;
-                if (j >= lists.length) {
-                    j = 0;
-                }
-                while (j != index) {
-                    if (lists[j] != null) {
-                        pq.add(new Integer[]{lists[j].val, j});
-                        lists[j] = lists[j].next;
-                        break;
-                    } else {
-                        j++;
-                        if (j >= lists.length) {
-                            j = 0;
-                        }
-                    }
-                }
-                if (j == index) {
-                    break;
-                }
             }
-        }
-        while (!pq.isEmpty()) {
-            Integer[] curr = pq.poll();
-            res.next = new ListNode(curr[0]);
-            res = res.next;
         }
         return head.next;
     }
