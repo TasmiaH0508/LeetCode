@@ -1,5 +1,31 @@
 class Solution {
 
+    /**
+    A topological ordering(although not necessarily unique) will always 
+    exist for a DAG, a graph without cycle. 
+
+    How to know if a cycle exists while carrying out the topo-sort?
+    There will be no graph nodes with 0 outgoing arrows. 
+
+    The problem will be modelled as such:
+    - an outgoing arrow from node A to B means A precedes B
+
+    To solve, we need to know who the parents of the nodes are. 
+    We need to know how many outgoing arrows there are. If none 
+    of the parents have 0 outgoing arrows, return false;
+
+    Method:
+    1. Initialise: a hashmap that can track the parents of a node, the 
+    hashmap of the number of outgoing arrows and hashset with only incoming arrows. 
+    2. For all the courses, while running through the prerequisites array,
+    update the parent and hashset. 
+    3. If hashset empty, return false. Use a stack to contain all of the 
+    values in the hashset by counting from 
+    0 to numCourses - 1
+    4. If none of the parent(s), after updating the number of outgoing arrows, 
+    have 0 outgoing arrows, immediately return false. 
+    */
+
     Stack<Integer> s = new Stack<>();
     HashMap<Integer, Integer> outgoingArrowsOf = new HashMap<>();
     HashMap<Integer, LinkedList<Integer>> parentOf = new HashMap<>();
