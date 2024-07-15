@@ -54,7 +54,7 @@ class Solution {
         for (Integer i : valToTreeNode.keySet()) {
             if (!children.contains(i)) {
                 System.out.println("THe value not contained in children is" + i);
-                System.out.println("Since this node is not the child of any other node, this is the root node.")
+                System.out.println("Since this node is not the child of any other node, this is the root node.");
                 return valToTreeNode.get(i);
             }
         }
