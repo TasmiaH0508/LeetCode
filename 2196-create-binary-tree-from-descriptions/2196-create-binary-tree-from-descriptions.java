@@ -1,27 +1,15 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
     public TreeNode createBinaryTree(int[][] descriptions) {
         Set<Integer> children = new HashSet<>();
+        // This hashmap can be used since all the treenode values are unique
         Map<Integer, TreeNode> valToTreeNode = new HashMap<>();
         for (int[] desc : descriptions) {
             int parentVal = desc[0];
             int childVal = desc[1];
             int side = desc[2];
             if (!children.contains(childVal)) {
+                // As soon as a node becomes a child of another node, 
+                // just add the node to the children hashset.
                 children.add(childVal);
             }
             if (valToTreeNode.containsKey(parentVal)) {
@@ -66,6 +54,7 @@ class Solution {
         for (Integer i : valToTreeNode.keySet()) {
             if (!children.contains(i)) {
                 System.out.println("THe value not contained in children is" + i);
+                System.out.println("Since this node is not the child of any other node, this is the root node.")
                 return valToTreeNode.get(i);
             }
         }
