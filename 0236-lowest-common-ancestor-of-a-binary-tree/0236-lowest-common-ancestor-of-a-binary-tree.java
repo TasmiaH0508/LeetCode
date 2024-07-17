@@ -8,11 +8,6 @@
  * }
  */
 class Solution {
-    /**
-    If one of the subtrees of the root is the same as one of the treenodes,
-    we need to check if the other treenode is in the other subtree or in the 
-    subtree of the subtree
-    */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root == p) {
             return p;
