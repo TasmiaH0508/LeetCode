@@ -1,13 +1,8 @@
 class Solution {
-    int[][] mem;
+
+    Map<Integer, Map<Integer, Integer>> mem = new HashMap<>();
+
     public int minHeightShelves(int[][] books, int shelfWidth) {
-        int n = books.length;
-        mem = new int[n + 1][shelfWidth + 1];
-        for (int i = 0; i <= n; i++) {
-            for (int j = 0; j <= shelfWidth; j++) {
-                mem[i][j] = -1; // Initialize with -1 to indicate that the state hasn't been computed yet
-            }
-        }
         return minHeightShelves(0, 0, 0, shelfWidth, books);
     }
 
@@ -16,8 +11,11 @@ class Solution {
             return currHeight;
         }
         // check if the result has already been computed
-        if (mem[book][currWidth] != -1) {
-            return mem[book][currWidth]; 
+        if (mem.containsKey(book)) {
+            Map<Integer, Integer> inner = mem.get(book);
+            if (inner.containsKey(currWidth)) {
+                return inner.get(currWidth);
+            }
         }
 
         int currBookWidth = books[book][0];
@@ -32,7 +30,17 @@ class Solution {
         // considering the probability that the book can also be placed in the bottom shelf -> note that this is always possible
         int heightOfShelfIfBookIsInBottomTier = currHeight + minHeightShelves(book + 1, currBookWidth, currBookHeight, maxWidth, books);
 
-        mem[book][currWidth] = Math.min(heightOfShelfIfBookIsInSameTier, heightOfShelfIfBookIsInBottomTier); // Store the result in the memoization array
-        return mem[book][currWidth];
+        int res = Math.min(heightOfShelfIfBookIsInSameTier, heightOfShelfIfBookIsInBottomTier);
+        if (mem.containsKey(book)) {
+            Map<Integer, Integer> inner = mem.get(book);
+            inner.put(currWidth, res);
+            mem.put(book, inner);
+        } else {
+            Map<Integer, Integer> inner = new HashMap<>();
+            inner.put(currWidth, res);
+            mem.put(book, inner);
+        }
+
+        return res;
     }
 }
