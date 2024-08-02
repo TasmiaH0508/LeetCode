@@ -1,45 +1,14 @@
 class Solution {
-
-    Map<Integer, Map<Integer, Integer>> map = new HashMap<>();
-
     public int rob(int[] nums) {
-        return rob(0, 0, nums);
-    }
-
-    private int rob(int house, int currMoney, int[] houses) {
-        if (house >= houses.length) {
-            return currMoney;
-        } else {
-            // For such a problem, memoization would be needed. The states are house and currMoney
-            if (map.containsKey(house)) {
-                Map<Integer, Integer> inner = map.get(house);
-                if (inner.containsKey(currMoney)) {
-                    return inner.get(currMoney);
-                }
-            }
-
-            // consider robbing the current house
-            // this would mean the next house that can be robbed is house + 2
-            int moneyIfCurrentHouseIsRobbed = rob(house + 2, currMoney + houses[house], houses);
-            
-            // consider not robbing the next house
-            // this would mean that the next house that can be robbed is house + 1
-            int moneyIfCurrentHouseIsNotRobbed = rob(house + 1, currMoney, houses);
-
-            int max = Math.max(moneyIfCurrentHouseIsRobbed, moneyIfCurrentHouseIsNotRobbed);
-
-            // memoize the result
-            if (map.containsKey(house)) {
-                Map<Integer, Integer> inner = map.get(house);
-                inner.put(currMoney, max);
-                map.put(house, inner);
-            } else {
-                Map<Integer, Integer> inner = new HashMap<>();
-                inner.put(currMoney, max);
-                map.put(house, inner);
-            }
-
-            return max;
+        // let the dp array be such that dp[i] stores the max amount of money
+        // robbed from 0 to i-
+        int[] maxToRob = new int[nums.length + 1];
+        // maxToRob[0] stores the max amount of money that can be robbed from house -1
+        maxToRob[0] = 0;
+        maxToRob[1] = nums[0];
+        for (int i = 2; i < maxToRob.length; i++) {
+            maxToRob[i] = Math.max(maxToRob[i - 2] + nums[i - 1], maxToRob[i - 1]);
         }
+        return maxToRob[nums.length];
     }
 }
