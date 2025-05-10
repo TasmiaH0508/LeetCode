@@ -1,9 +1,9 @@
 class Solution {
-    public static long minSum(int[] nums1, int[] nums2) {
-        int sum1 = 0;
-        int sum2 = 0;
-        int numZeroes1 = 0;
-        int numZeroes2 = 0;
+        public static long minSum(int[] nums1, int[] nums2) {
+        long sum1 = 0;
+        long sum2 = 0;
+        long numZeroes1 = 0;
+        long numZeroes2 = 0;
         for (int num : nums1) {
             sum1 += num;
             if (num == 0) {
@@ -26,8 +26,8 @@ class Solution {
         } else {
             if (sum1 > sum2) {
                 // Make up the difference first
-                int diff = sum1 - sum2;
-                int numZeroesNotCoveredInNums2 = diff - numZeroes2; // if negative, sum zeroes in nums2 not covered.
+                long diff = sum1 - sum2;
+                long numZeroesNotCoveredInNums2 = diff - numZeroes2; // if negative, sum zeroes in nums2 not covered.
                 // Check for additional zeroes in nums1
                 if (numZeroes2 == 0) {
                     return -1;
@@ -42,7 +42,7 @@ class Solution {
                         // all the 0s can be covered already
                         return sum1 + numZeroes1;
                     } else {
-                        int numZeroesInNums2ThatNeedToBeCovered = Math.abs(numZeroesNotCoveredInNums2);
+                        long numZeroesInNums2ThatNeedToBeCovered = Math.abs(numZeroesNotCoveredInNums2);
                         return sum1 + Math.max(numZeroesInNums2ThatNeedToBeCovered, numZeroes1);
                     }
                 }
