@@ -7,50 +7,48 @@ class Solution {
     Map<Integer, Integer> freq = new HashMap<>();
 
     public int[] findEvenNumbers(int[] digits) {
-        Arrays.sort(digits);
-        List<Integer> startingIndices = new LinkedList<>();
-        Set<Integer> evenDigits = new HashSet<>();
-        for (int i = 0; i < digits.length; i++) {
-            if (digits[i] % 2 == 0) {
-                evenDigits.add(digits[i]);
-            }
-            if (!freq.containsKey(digits[i])) {
-                freq.put(digits[i], 1);
-                startingIndices.add(i);
-            } else {
-                int f = freq.get(digits[i]);
-                f++;
-                freq.put(digits[i], f);
+        Set<Integer> evenNumbers = new HashSet<>();
+        for (int i = 0; i < 5; i++) {
+            evenNumbers.add(i * 2);
+        }
+        for (int i = 0; i < 10; i++) {
+            freq.put(i, 0);
+        }
+        for (int digit : digits) {
+            int f = freq.get(digit);
+            f++;
+            freq.put(digit, f);
+        }
+        for (int f = 0; f < 10; f++) {
+            if (freq.get(f) == 0) {
+                evenNumbers.remove(f);
+                freq.remove(f);
             }
         }
-        
+
         List<Integer> res = new LinkedList<>();
-        for (int i : startingIndices) {
-            if (digits[i] == 0) {
+        for (int leadingDigit : freq.keySet()) {
+            if (leadingDigit == 0) {
                 continue;
             }
-            int startingDigit = digits[i];
-            for (int j : startingIndices) {
-                List<int[]> numbersThatCanBeFormed = new LinkedList<>();
-                int firstTrailingDigit = digits[j];
-                for (Integer evenDigit : evenDigits) {
-                    int[] numberToForm = new int[3];
-                    numberToForm[0] = startingDigit;
-                    numberToForm[1] = firstTrailingDigit;
-                    numberToForm[2] = evenDigit;
-                    numbersThatCanBeFormed.add(numberToForm);
+            for (int firstTrailingDigit : freq.keySet()) {
+                List<int[]> ll = new LinkedList<>();
+                for (int evenLastDigit : evenNumbers) {
+                    int[] num = new int[3];
+                    num[0] = leadingDigit;
+                    num[1] = firstTrailingDigit;
+                    num[2] = evenLastDigit;
+                    ll.add(num);
                 }
-                // check if the numbers is valid
-                for (int[] numberThatCanBeFormed : numbersThatCanBeFormed) {
-                    if (isValid(numberThatCanBeFormed)) {
-                        int validNumFormed = 100 * numberThatCanBeFormed[0] 
-                                + 10 * numberThatCanBeFormed[1] 
-                                + numberThatCanBeFormed[2];
-                        res.add(validNumFormed);
+                for (int[] num : ll) {
+                    if (isValid(num)) {
+                        int numVal = 100 * num[0] + 10 * num[1] + num[2];
+                        res.add(numVal);
                     }
                 }
             }
         }
+
         int[] resArr = new int[res.size()];
         for (int i = 0; i < resArr.length; i++) {
             resArr[i] = res.get(i);
