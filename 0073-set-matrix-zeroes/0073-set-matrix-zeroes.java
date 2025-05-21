@@ -12,8 +12,8 @@ class Solution {
                     colsToZero.add(j);
                 }
                 if (colsToZero.size() == matrix[0].length || rowsToZero.size() == matrix.length) {
-                break;
-            }
+                    break;
+                }
             }
         }
         for (int rowIndex : rowsToZero) {
